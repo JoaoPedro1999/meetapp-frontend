@@ -1,21 +1,28 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { MdAddCircleOutline } from 'react-icons/md';
 import { Container, Meetup } from './styles';
 import api from '../../services/api';
+import { SelectMeetup } from '../../store/modules/meetup/action';
 
 export default function Dashboard() {
-  const [meetup, setMeetup] = useState([]);
+  const dispatch = useDispatch();
+  const [meetups, setMeetups] = useState([]);
 
   useEffect(() => {
     async function loadMeetup() {
       const response = await api.get('organizing');
 
-      setMeetup(response.data);
+      setMeetups(response.data);
     }
 
     loadMeetup();
   }, []);
+
+  function handleSelectMeetup(meetup) {
+    dispatch(SelectMeetup(meetup));
+  }
 
   return (
     <Container>
@@ -29,11 +36,15 @@ export default function Dashboard() {
         </Link>
       </header>
       <ul>
-        {meetup.map(info => (
-          <Link key={info.id} to="/info">
+        {meetups.map(meetup => (
+          <Link
+            key={meetup.id}
+            to="/info"
+            onClick={() => handleSelectMeetup(meetup)}
+          >
             <Meetup>
-              <strong>{info.title}</strong>
-              <span>{info.date}</span>
+              <strong>{meetup.title}</strong>
+              <span>{meetup.date}</span>
             </Meetup>
           </Link>
         ))}

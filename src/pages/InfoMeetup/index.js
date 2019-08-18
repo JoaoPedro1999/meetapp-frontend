@@ -1,13 +1,22 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { MdModeEdit, MdDeleteForever, MdEvent, MdPlace } from 'react-icons/md';
+import { CancelMeetupRequest } from '../../store/modules/meetup/action';
 import { Container, Card, Information } from './styles';
 
 export default function InfoMeetup() {
+  const dispatch = useDispatch();
+  const meetup = useSelector(state => state.meetup.active);
+
+  function handleCancelMeetup(id) {
+    dispatch(CancelMeetupRequest(id));
+  }
+
   return (
     <Container>
       <header>
-        <strong>Meetup de React Native</strong>
+        <strong>{meetup.title}</strong>
         <div>
           <Link to="/edit">
             <button type="button">
@@ -15,12 +24,11 @@ export default function InfoMeetup() {
               <span>Editar</span>
             </button>
           </Link>
-          <Link to="/dashboard">
-            <button type="button">
-              <MdDeleteForever size={24} />
-              <span>Cancelar</span>
-            </button>
-          </Link>
+
+          <button type="button" onClick={() => handleCancelMeetup(meetup.id)}>
+            <MdDeleteForever size={24} />
+            <span>Cancelar</span>
+          </button>
         </div>
       </header>
       <Card>
@@ -28,21 +36,15 @@ export default function InfoMeetup() {
           src="https://camunda.com/img/events/meetup-example.jpg"
           alt="Meetup"
         />
-        <p>
-          O Meetup de React Native é um evento que reúne a comunidade de
-          desenvolvimento mobile utilizando React a fim de compartilhar
-          conhecimento. Todos são convidados. Caso queira participar como
-          palestrante do meetup envie um e-mail para
-          organizacao@meetuprn.com.br.
-        </p>
+        <p>{meetup.description}</p>
         <Information>
           <div>
             <MdEvent size={24} color="#ffff" />
-            <span>24 de Junho, às 20h</span>
+            <span>{meetup.date}</span>
           </div>
           <div>
             <MdPlace size={24} color="#ffff" />
-            <span>Rua Guilherme Gembala, 260</span>
+            <span>{meetup.location}</span>
           </div>
         </Information>
       </Card>
