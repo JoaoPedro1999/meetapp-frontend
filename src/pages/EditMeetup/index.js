@@ -10,17 +10,15 @@ import { Container } from './styles';
 export default function EditMeetup() {
   const meetup = useSelector(state => state.meetup.active);
   const dispatch = useDispatch();
-  console.log(meetup);
 
   function handleSubmit(data) {
-    console.log(data);
-    // dispatch(updateMeetupRequest(data));
+    dispatch(updateMeetupRequest(data));
   }
 
   return (
     <Container>
       <Form initialData={meetup} onSubmit={handleSubmit}>
-        <MeetupPhoto name="meetup_id" />
+        <MeetupPhoto name="file_id" />
 
         <Input name="title" placeholder="Titulo do Meetup" />
         <Input

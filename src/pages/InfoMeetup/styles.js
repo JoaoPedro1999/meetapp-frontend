@@ -21,7 +21,7 @@ export const Container = styled.div`
         margin-left: 10px;
         height: 42px;
         width: 116px;
-        background: #4dbaf9;
+        background: #f94d6a;
         font-weight: bold;
         color: #fff;
         border: 0;
@@ -29,7 +29,7 @@ export const Container = styled.div`
         font-size: 16px;
         transition: background 0.2s;
         &:hover {
-          background: ${darken(0.03, '#409fe7')};
+          background: ${darken(0.03, '#f94d6a')};
         }
         span {
           padding-left: 5px;
@@ -50,7 +50,7 @@ export const Card = styled.div`
   display: flex;
   flex-direction: column;
   img {
-    max-height: 300px;
+    max-height: 500px;
   }
   p {
     margin-top: 10px;

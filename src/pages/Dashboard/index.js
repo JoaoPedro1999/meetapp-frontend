@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { MdAddCircleOutline } from 'react-icons/md';
+import { format, parseISO } from 'date-fns';
+import pt from 'date-fns/locale/pt-BR';
 import { Container, Meetup } from './styles';
 import api from '../../services/api';
 import { SelectMeetup } from '../../store/modules/meetup/action';
@@ -9,16 +11,23 @@ import { SelectMeetup } from '../../store/modules/meetup/action';
 export default function Dashboard() {
   const dispatch = useDispatch();
   const [meetups, setMeetups] = useState([]);
+  const [date, setDate] = useState();
 
   useEffect(() => {
-    async function loadMeetup() {
-      const response = await api.get('organizing');
+    setDate(format(new Date(), 'MM/dd/yyyy'));
 
-      setMeetups(response.data);
+    async function loadMeetupps() {
+      const response = await api.get('organizing', { params: { date } });
+      const data = response.data.map(m => ({
+        ...m,
+        formattedDate: format(parseISO(m.date), "d 'de' MMMM', às' hh'h'mm", {
+          locale: pt,
+        }),
+      }));
+      setMeetups(data);
     }
-
-    loadMeetup();
-  }, []);
+    loadMeetupps();
+  }, [date]);
 
   function handleSelectMeetup(meetup) {
     dispatch(SelectMeetup(meetup));
@@ -44,7 +53,7 @@ export default function Dashboard() {
           >
             <Meetup>
               <strong>{meetup.title}</strong>
-              <span>{meetup.date}</span>
+              <span>{meetup.formattedDate}</span>
             </Meetup>
           </Link>
         ))}

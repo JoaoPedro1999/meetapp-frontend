@@ -32,15 +32,12 @@ export default function InfoMeetup() {
         </div>
       </header>
       <Card>
-        <img
-          src="https://camunda.com/img/events/meetup-example.jpg"
-          alt="Meetup"
-        />
+        <img src={meetup.File.url} alt="Meetup" />
         <p>{meetup.description}</p>
         <Information>
           <div>
             <MdEvent size={24} color="#ffff" />
-            <span>{meetup.date}</span>
+            <span>{meetup.formattedDate}</span>
           </div>
           <div>
             <MdPlace size={24} color="#ffff" />

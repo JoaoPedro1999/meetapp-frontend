@@ -4,7 +4,7 @@ import api from '../../services/api';
 
 import { Container } from './styles';
 
-export default function MeetuoPhoto() {
+export default function MeetupPhoto() {
   const { defaultValue, registerField } = useField('file_id');
 
   const [file, setFile] = useState(defaultValue && defaultValue.id);

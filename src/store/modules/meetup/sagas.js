@@ -30,14 +30,12 @@ export function* createMeetup({ payload }) {
 
 export function* CancelMeetup({ payload }) {
   try {
-    console.log(payload.id);
     yield call(api.delete, `meetups/${payload.id}`);
 
     toast.success('Meetup cancelado com sucesso!');
 
     history.push('/dashboard');
   } catch (err) {
-    console.log(err);
     toast.error('Falha em cancelar o Meetup!');
   }
 }
@@ -61,7 +59,7 @@ export function* updateMeetup({ payload }) {
 
     yield put(updateMeetupSuccess(response.data));
   } catch (err) {
-    toast.error('Erro ao atualizar perfil, confira seus dados!');
+    toast.error('Erro ao atualizar o meetup, confira seus dados!');
     yield put(updateMeetupFailure());
   }
 }
